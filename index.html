@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stock Symbol Lookup</title>
+</head>
+<body>
+    <h1>Enter Stock Symbol</h1>
+    <input type="text" id="stockSymbol" placeholder="e.g., MSFT, AAPL">
+    <button onclick="fetchStockInfo()">Get Stock Info</button>
+    <div id="result"></div>
+
+    <script>
+        async function fetchStockInfo() {
+            const stockSymbol = document.getElementById('stockSymbol').value;
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerText = 'Fetching stock data...';
+
+            try {
+                const response = await fetch(`https://stockdataapp.azurewebsites.net/api/fetchstockdata?symbol=${stockSymbol}`);
+                
+                if (!response.ok) {
+                    throw new Error('Stock symbol not found or error fetching data.');
+                }
+
+                const data = await response.json();
+                
+                if (data && data['Error Message']) {
+                    resultDiv.innerText = 'Stock symbol not found. Please enter a valid stock symbol.';
+                } else if (data && data['Time Series (Daily)']) {
+                    resultDiv.innerText = JSON.stringify(data, null, 2);
+                } else {
+                    resultDiv.innerText = 'Unexpected error fetching data.';
+                }
+            } catch (error) {
+                resultDiv.innerText = error.message;
+            }
+        }
+    </script>
+</body>
+</html>
