@@ -66,4 +66,4 @@ jobs:
         with:
           app-name: 'thestockinfo'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_A6DF3425D1DE46BB830A54BC06109974 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_27E651B63D6A4497BD09D0572E1C5374 }}
